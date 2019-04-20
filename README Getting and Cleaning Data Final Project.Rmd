@@ -1,0 +1,93 @@
+---
+title: "README.Rmd Getting and Cleaning Data Final Project"
+author: "JADraves"
+date: "April 20, 2019"
+output: html_document
+---
+
+##README file for run_analysis.R
+
+The assignment is as follows: 
+**Getting and Cleaning Data Course Project**
+
+Instructions for project The purpose of this project is to demonstrate your ability to collect, work with, and clean a data set. The goal is to prepare tidy data that can be used for later analysis. You will be graded by your peers on a series of yes/no questions related to the project. You will be required to submit: 1) a tidy data set as described below, 2) a link to a Github repository with your script for performing the analysis, and 3) a code book that describes the variables, the data, and any transformations or work that you performed to clean up the data called CodeBook.md. You should also include a README.md in the repo with your scripts. This repo explains how all of the scripts work and how they are connected.
+
+One of the most exciting areas in all of data science right now is wearable computing - see for example this article . Companies like Fitbit, Nike, and Jawbone Up are racing to develop the most advanced algorithms to attract new users. The data linked to from the course website represent data collected from the accelerometers from the Samsung Galaxy S smartphone. A full description is available at the site where the data was obtained:
+
+http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
+
+Here are the data for the project:
+
+https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
+
+You should create one R script called run_analysis.R that does the following.
+
+* 1.  Merges the training and the test sets to create one data set.
+* 2.  Extracts only the measurements on the mean and standard deviation for each measurement.
+* 3.  Uses descriptive activity names to name the activities in the data set
+* 4.  Appropriately labels the data set with descriptive variable names.
+* 5.  From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+
+##Description of the Script
+
+This script performs all of the steps required for the completion of the final project in the course Getting and Cleaning Data.  
+
+### Associated Files
+
+* **README Getting and Cleaning Data Final Project**
+* **Coodbook for Getting and CLeaning Data Final Project**
+* **run_analysis.R**
+* **TidyData.txt**
+
+Data set acquired from the UCI site and placed in the folder **UCI HAR Dataset**
+
+###The data from UCI HAR is imported and organized with the following assignments:
+
+* *feature* contains the variables in the features.txt file.  Feature (561 rows and 2 columns) contains the variable names and assigned index.  The variables selected consists of raw signals recorded by phone:  tAcc-XYZ and tGyro-XYZ
+
+* *activity* contains labels of the activities performed during the study and are read from the  activity_txt file. (6 rows and 2 columns)
+
+* *subject_test* contains the test data for 30% (9 of 30 subjects) of the observations.  subject_test (2947 rows and 1 column) is read from the test/subject_test.txt file
+
+* *X_test* contains the values of the variables recorded for each subject in the test set.  X_test (2947 rows and 561 columns) is read from the test/X_test.txt file
+
+* *y-test* contains the code labels for each of the activities.  y_test (2947 rows and 1 column) is read from the test/y_test.txt file
+
+* *subject_train* contains the test data for 70% (21 of 30 subjects) of the observations.  subject_train (7352 rows and 1 column) is read from the test/subject_train.txt file
+
+* *X_train* contains the values of the variables recorded for each subject in the training set.  X_train (7352 rows and 561 columns) is read from the test/X_train.txt file
+
+* *y-train* contains the code labels for each of the activities.  y_train (7352 rows and 1 column) is read from the test/y_train.txt file
+
+### The following files are created by merging X_test with X_train, y_test with y_train, and then merging the results with Subid to produce one data set called **Working_Data**. 
+
+* *X_bind* is prepared by merging the X_train and X_test files using the rbind() command.   
+X_bind (10299 rows and 561 columns).
+
+* *y_bind* is prepared by merging the y_train and y_test files using the rbind() command.   
+y_bind (10299 rows and 1 column).
+
+* *Subid* is prepared by merging the subject_train and subject_test files using the rbind() command. Subid (10299 rows and 1 columns).
+
+* *Working_Data* is prepared by merging the Subid, X_bind, and y_bind using the cbind() command.  Working_Data (10299 rows and 563 columns).
+
+
+### The means and standard deviation are extracted into a separate file called **Summary_Data**
+
+* *Summary_Data* is the result of subsetting the **Working_Data** to extract the means and standard deviations based on subject and code.  Summary_Data* (10299 rows and 88 columns)
+
+### The data requires more descriptive variables.  Abbreviations in the code column are replaced with more appropriate variable names with the following assignments:
+
+* **Accelertomer** replaces Acc
+* **Body** replaces BodyBody
+* **Gyroscope** replaces Gyro
+* **Magnitued**	replaces Mag
+
+* **Frequency** replaces all codes beginning with the character f
+* **Time** replaces all codes beginning with the character t
+
+
+### Average and standard deviations for each activity and each subject
+
+* **TidyData** is the required second data set that has been grouped by subject and the mean and standard deviation extracted for each activity and each subject.  TidyData (180 rows and 88 columns) is exported into the file **TidyData.txt**.
+
